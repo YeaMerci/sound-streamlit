@@ -95,12 +95,12 @@ class AudioWidget(AudioConverter):
             )
         return io.BytesIO(data)
 
-    def _record_audio(self) -> AnyStr:
+    def record_audio(self) -> AnyStr:
         data = self.st_audiorec()
         if data is not None:
             return self.__check_duration(data)
 
-    def _load_audio(self) -> Union[bytes, None]:
+    def load_audio(self) -> Union[bytes, None]:
         data = st.file_uploader(
             label=f"Upload an audio file of your heartbeat "
                   f"that more or equal {self.min_duration} and "
@@ -119,5 +119,5 @@ class AudioWidget(AudioConverter):
             options=["Upload 📁", "Record 🎤"]
         )
         if choice == "Upload 📁":
-            return self._load_audio()
-        return self._record_audio()
+            return self.load_audio()
+        return self.record_audio()
