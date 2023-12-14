@@ -74,9 +74,12 @@ class AudioWidget(AudioConverter):
                 wav_bytes = stream.read()
         return wav_bytes
 
-    def __check_duration(self, data: AnyStr | bytes) -> io.BytesIO:
-        audio, sr = librosa.load(io.BytesIO(data), sr=self.sample_rate, mono=self.mono)
-        duration = librosa.get_duration(y=audio, sr=self.sample_rate)
+    def _safe_load(self, data: io.BytesIO) -> tuple[np.ndarray, int]:
+        return librosa.load(data, sr=self.sample_rate, mono=self.mono)
+
+    def __check_duration(self, data: AnyStr | bytes) -> tuple[np.ndarray, int]:
+        audio, sr = librosa.load(io.BytesIO(data), sr=None)
+        duration = librosa.get_duration(y=audio, sr=sr)
         if duration > self.max_duration:
             st.error(
                 f"Oops! Length of the heartbeat audio recording "
@@ -93,9 +96,9 @@ class AudioWidget(AudioConverter):
                 f"Please try again.",
                 icon="😮"
             )
-        return io.BytesIO(data)
+        return self._safe_load(io.BytesIO(data))
 
-    def record_audio(self) -> AnyStr:
+    def record_audio(self) -> tuple[np.ndarray, int]:
         data = self.st_audiorec()
         if data is not None:
             return self.__check_duration(data)
@@ -112,7 +115,7 @@ class AudioWidget(AudioConverter):
             data = self.__call__(data)
             return self.__check_duration(data)
 
-    def get_audio(self, sidebar: Optional[bool] = True) -> io.BytesIO:
+    def get_audio(self, sidebar: Optional[bool] = True) -> tuple[np.ndarray, int]:
         placeholder = st.sidebar if sidebar else st
         choice = placeholder.selectbox(
             label="Do you want to upload or record an audio file?",
