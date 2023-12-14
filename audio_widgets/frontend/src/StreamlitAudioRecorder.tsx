@@ -43,7 +43,7 @@ class StAudioRec extends StreamlitComponentBase<State> {
       <span>
         <div>
           <button id='record' onClick={this.onClick_start}>
-            Start Recording
+            Start
           </button>
           <button id='stop' onClick={this.onClick_stop}>
             Stop
@@ -60,8 +60,8 @@ class StAudioRec extends StreamlitComponentBase<State> {
             state={recordState}
             onStop={this.onStop_audio}
             type='audio/wav'
-            backgroundColor='#000000'
-            foregroundColor='#6633CC'
+            backgroundColor='#0B0E22'
+            foregroundColor='#1d22f7'
             canvasWidth={450}
             canvasHeight={100}
           />
