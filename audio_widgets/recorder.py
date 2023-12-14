@@ -1,4 +1,4 @@
-"""Docstring"""
+"""Streamlit component for audio recording and uploading."""
 
 __all__ = ["AudioWidget"]
 
@@ -17,6 +17,17 @@ from .converter import AudioConverter
 
 
 class AudioWidget(AudioConverter):
+    """
+    Custom streamlit component for audio recording and uploading.
+    :param min_duration: minimum duration of audio file (By default: 0 seconds)
+    :param max_duration: maximum duration of audio file (By default: 60_000 seconds)
+    :param available_formats: audio files with which formats available for uploading
+    :param convert_to: what format to convert an audio file into if it needs to be converted (By default .wav)
+    :param execlude_convert: audio files with which formats do not require conversion to a supported format
+    :param sample_rate: sampling rate to which the audio file will be resampled
+    :param mono: convert waveform to mono format with one channel if True else load 2 channels
+    """
+
     __default_extensions = [
         ".wav", ".aac",
         ".ogg", ".mp3",
