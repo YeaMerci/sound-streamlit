@@ -22,14 +22,13 @@ class AudioConverter:
                  common_extensions: Optional[list[str, ...]] = None,
                  convert_to: Optional[str] = "wav",
                  ac: Optional[int] = 1,
-                 root_dir: Optional[str] = None
                  ):
         if not isinstance(common_extensions, list):
             common_extensions = self.__common_extensions
         self.common_extensions = common_extensions
         self.convert_to = convert_to
         self.ac = ac
-        self.root_dir = root_dir
+        self.root_dir = os.getcwd()
 
     def convert(self, path: str | Path) -> AnyStr:
         return Popen(
@@ -58,8 +57,8 @@ class AudioConverter:
             try:
                 self.write(in_path, source.getbuffer())
                 data = self.convert(in_path)
-            except Exception as e:
-                st.error("We're sorry, something happened to the server ⚡️")
+            except RuntimeError as e:
+                st.error(f"We're sorry, something happened to the server ⚡️ \n{e}")
             else:
                 return data
             finally:
