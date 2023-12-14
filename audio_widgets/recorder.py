@@ -28,14 +28,16 @@ class AudioRecorder(AudioConverter):
     ]
 
     def __init__(self,
-                 duration: Optional[int] = 10,
+                 min_duration: Optional[int] = None,
+                 max_duration: Optional[int] = None,
                  valid_extensions: Optional[list[str]] = None,
                  convert_to: Optional[str] = "wav",
                  sample_rate: Optional[int] = 22050,
                  mono: Optional[bool] = True
                  ):
-        super().__init__(valid_extensions, convert_to, (1 if mono else 2), ROOT_DIR)
-        self.duration = duration
+        super().__init__(valid_extensions, convert_to, (1 if mono else 2))
+        self.min_duration = min_duration if min_duration else 0
+        self.max_duration = max_duration if max_duration else int(60e+3)
         self.sample_rate = sample_rate
         self.mono = mono
 
@@ -71,16 +73,23 @@ class AudioRecorder(AudioConverter):
     def __check_duration(self, data: AnyStr | bytes) -> io.BytesIO:
         audio, sr = librosa.load(io.BytesIO(data), sr=self.sample_rate, mono=self.mono)
         duration = librosa.get_duration(y=audio, sr=self.sample_rate)
-        if duration >= self.duration:
-            return io.BytesIO(data)
-        else:
+        if duration > self.max_duration:
             st.error(
                 f"Oops! Length of the heartbeat audio recording "
-                f"must be at least {self.duration} seconds, "
+                f"must be less than {self.max_duration} seconds, "
                 f"but the length is {round(duration, 2)} seconds. "
                 f"Please try again.",
                 icon="😮"
             )
+        if duration < self.min_duration:
+            st.error(
+                f"Oops! Length of the heartbeat audio recording "
+                f"must be at least {self.min_duration} seconds, "
+                f"but the length is {round(duration, 2)} seconds. "
+                f"Please try again.",
+                icon="😮"
+            )
+        return io.BytesIO(data)
 
     def _record_audio(self) -> AnyStr:
         data = self.st_audiorec()
@@ -98,8 +107,9 @@ class AudioRecorder(AudioConverter):
             data = self.__call__(data)
             return self.__check_duration(data)
 
-    def get_audio(self) -> io.BytesIO:
-        choice = st.sidebar.selectbox(
+    def get_audio(self, sidebar: Optional[bool] = True) -> io.BytesIO:
+        placeholder = st.sidebar if sidebar else st
+        choice = placeholder.selectbox(
             label="Do you want to upload or record an audio file?",
             options=["Upload 📁", "Record 🎤"]
         )
