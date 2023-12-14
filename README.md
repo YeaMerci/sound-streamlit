@@ -39,7 +39,17 @@ from audio_widgets import AudioWidget
 
 ### initialize component
 ```python
-widget = AudioWidget()   
+# Custom streamlit component for audio recording and uploading
+widget = AudioWidget()  
+
+# You can see params of AudioWidget belove:
+# min_duration: minimum duration of audio file (By default: 0 seconds)
+# max_duration: maximum duration of audio file (By default: 60_000 seconds)
+# available_formats: audio files with which formats available for uploading
+# convert_to: what format to convert an audio file into if it needs to be converted (By default .wav)
+# execlude_convert: audio files with which formats do not require conversion to a supported format
+# sample_rate: sampling rate to which the audio file will be resampled
+# mono: convert waveform to mono format with one channel if True else load 2 channels
 ```
 
 ### use only recorder 
@@ -103,12 +113,17 @@ canvasHeight={100}
 />
 ```
 
-### 6. Build fronted comnponent
+### 6. Remove current frontend build
+```shell
+rm -rf ./audio_widgets/frontend/build
+```
+
+### 7. Build new fronted comnponent
 ```shell
 npm run build
 ```
 
-### 7. Remove all dependencies unless you no longer need to change the style
+### 8. Remove all dependencies unless you no longer need to change the style
 #### on Unix-like (Linux, macOS)
 ```shell 
 rm -rf node_modules
