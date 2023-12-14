@@ -1,6 +1,6 @@
 """Docstring"""
 
-__all__ = ["AudioRecorder"]
+__all__ = ["AudioWidget"]
 
 from typing import Union, AnyStr, Optional
 from pathlib import Path
@@ -14,10 +14,9 @@ import streamlit as st
 import streamlit.components.v1 as components
 from streamlit.components.v1.components import CustomComponent
 from .converter import AudioConverter
-from utils.variables import ROOT_DIR
 
 
-class AudioRecorder(AudioConverter):
+class AudioWidget(AudioConverter):
     __default_extensions = [
         ".wav", ".aac",
         ".ogg", ".mp3",
@@ -30,12 +29,17 @@ class AudioRecorder(AudioConverter):
     def __init__(self,
                  min_duration: Optional[int] = None,
                  max_duration: Optional[int] = None,
-                 valid_extensions: Optional[list[str]] = None,
+                 available_formats: Optional[str] = None,
                  convert_to: Optional[str] = "wav",
+                 execlude_convert: Optional[list[str]] = None,
                  sample_rate: Optional[int] = 22050,
                  mono: Optional[bool] = True
                  ):
-        super().__init__(valid_extensions, convert_to, (1 if mono else 2))
+        super().__init__(execlude_convert, convert_to, (1 if mono else 2))
+        if not available_formats:
+            available_formats = self.__default_extensions
+
+        self.available_formats = available_formats
         self.min_duration = min_duration if min_duration else 0
         self.max_duration = max_duration if max_duration else int(60e+3)
         self.sample_rate = sample_rate
@@ -99,8 +103,9 @@ class AudioRecorder(AudioConverter):
     def _load_audio(self) -> Union[bytes, None]:
         data = st.file_uploader(
             label=f"Upload an audio file of your heartbeat "
-                  f"that is at least {self.duration} seconds long.",
-            type=self.__default_extensions
+                  f"that more or equal {self.min_duration} and "
+                  f"less or equal {self.max_duration} seconds.",
+            type=self.available_formats
         )
         if data:
             st.audio(data)
