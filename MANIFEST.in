@@ -1,2 +1,2 @@
 include requirements.txt
-recursive-include soundlit/frontend *
+recursive-include soundlit/st_audiorec *
