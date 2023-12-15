@@ -91,6 +91,8 @@ class AudioWidget(AudioConverter):
     def __check_duration(self, data: AnyStr | bytes) -> tuple[np.ndarray, int]:
         audio, sr = librosa.load(io.BytesIO(data), sr=None)
         duration = librosa.get_duration(y=audio, sr=sr)
+        if (duration >= self.min_duration) and (duration <= self.max_duration):
+            return self._safe_load(io.BytesIO(data))
         if duration > self.max_duration:
             st.error(
                 f"Oops! Length of the heartbeat audio recording "
@@ -107,7 +109,6 @@ class AudioWidget(AudioConverter):
                 f"Please try again.",
                 icon="😮"
             )
-        return self._safe_load(io.BytesIO(data))
 
     def record_audio(self) -> tuple[np.ndarray, int]:
         data = self.st_audiorec()
