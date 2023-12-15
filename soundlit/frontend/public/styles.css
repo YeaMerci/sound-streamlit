@@ -29,8 +29,8 @@ button{
     margin-right: 0.5rem;
     margin-left: 0.1rem;
     font-size: 16px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #0b0e22;
+    color: #FFFFFF;
     border: 1px solid rgba(49, 51, 63, 0.2);
     border-radius: 0.25rem;
     margin-top: 0.75rem;
@@ -45,9 +45,9 @@ button:hover{
     margin-right: 0.5rem;
     margin-left: 0.1rem;
     font-size: 16px;
-    background-color: #ffffff;
-    color: #ff4c4b;
-    border: 1px solid #ff4c4b;
+    background-color: #0b0e22;
+    color: #1d22f7;
+    border: 1px solid #1d22f7;
     border-radius: 0.25rem;
     margin-top: 0.75rem;
     margin-bottom: 0.25rem;
