@@ -1,25 +1,16 @@
-<div class="alert alert-block alert-info" style="font-size:20px; background-color: #fffff; font-family:verdana; color: #ec4949; border-radius: 10px; border: 0px #533078 solid">
-    <h1>streamlit-audio-widgets</h1>
-</div>
+# sound-streamlit
 
-**Ask any questions. I will be very grateful if you rate the repository ⭐️**
+**sound-streamlit is a custom widget for working with audio built into streamlit. 
+You only need to import one class that will allow you to record or load audio. 
+Any audio format is supported, and in the parameters you can set the sample rate, 
+minimum or maximum audio length and much more.
+Ask any questions. I will be very grateful if you rate the repository ⭐️**
 
-****
-
-<div class="alert alert-block alert-info" style="font-size:20px; background-color: #0b0e22; font-family:verdana; color: #423a7f; border-radius: 10px; border: 0px #533078 solid">
-    Need upload and preprocess an audio file with a crazy extension? 🫣 
-    <br>We support converting all formats to a single standard, since ffmpeg is under the hood!<br>
-    Do you need to record audio rather than upload? 
-    <br>This widget has a built-in recorder.<br>
-</div>
-
-
-****
 
 ## Installation & setup
 ### 1. Install widget from PyPI
 ```shell
-pip install streamlit-audio-widgets
+pip install sound-streamlit
 ```
 ### 2. Make sure that you have the C++ ffmpeg library installed on your computer. 
 <br>Its absence will lead to an [error](https://stackoverflow.com/questions/62470863/ffmpeg-command-not-found-but-pip-list-shows-ffmpeg).<br> 
@@ -28,12 +19,10 @@ If you are not sure that you have it, then run the command below (only for Unix)
 sudo apt install ffmpeg
 ```
 
-****
-
 ## How to use?
 ### import package with widget
 ```python
-from audio_widgets import AudioWidget
+from soundlit import AudioWidget
 ```
 
 ### initialize component
@@ -65,8 +54,6 @@ audio = widget.load_audio()
 ```python
 audio = widget.get_audio()
 ```
-
-****
 
 ## How change recoder style?
 ### 1. Install [node](https://nodejs.org/en/download) >= 16
