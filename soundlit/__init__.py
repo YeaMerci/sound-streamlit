@@ -1,1 +1,1 @@
-from .recorder import *
+from .widget import *
