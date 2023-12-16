@@ -57,7 +57,7 @@ class AudioConverter:
             try:
                 self.write(in_path, source.getbuffer())
                 data = self.convert(in_path)
-            except RuntimeError as e:
+            except Exception as e:
                 st.error(f"We're sorry, something happened to the server ⚡️ \n{e}")
             else:
                 return data

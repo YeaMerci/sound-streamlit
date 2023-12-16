@@ -12,7 +12,7 @@ import librosa
 import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
-from .st_audiorec import st_audiorec
+from .recorder import st_audiorec
 from .converter import AudioConverter
 
 

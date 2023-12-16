@@ -57,9 +57,9 @@ audio = widget.get_audio()
 
 ## How change recoder style?
 ### 1. Install [node](https://nodejs.org/en/download) >= 16
-### 2. Go to the cloned project directory, then to the audio_widgets package, and finally to the fronted folder.
+### 2. Go to the cloned project directory, then to the 'soundlit/recorder' package, and finally to the fronted folder.
 ```shell
-cd ./audio_widgets/frontend
+cd ./soundlit/recorder/frontend
 ```
 ### 3. Install all fronted dependencies 
 ```npm
@@ -82,9 +82,9 @@ $env:NODE_OPTIONS = "--openssl-legacy-provider"
 ```
 
 ### 5. Change component style
-#### go to the file at the path below in any text editor
+#### go to the file StreamlitAudioRecorder.tsx at the path below in any text editor
 ```shell
-cd ./audio_widgets/frontend/src/StreamlitAudioRecorder.tsx
+cd ./soundlit/recorder/frontend/src/StreamlitAudioRecorder.tsx
 ```
 #### and change the styles that start from line 59
 ```html
@@ -101,7 +101,7 @@ canvasHeight={100}
 
 ### 6. Remove current frontend build
 ```shell
-rm -rf ./audio_widgets/frontend/build
+rm -rf ./soundlit/recorder/frontend/build
 ```
 
 ### 7. Build new fronted comnponent
