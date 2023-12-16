@@ -15,7 +15,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="sound-streamlit",
-    version="0.1.6",
+    version="0.1.7",
     author="YeaMerci",
     author_email="entertomerci@gmail.com",
     description="The package contains a ready-to-use streamlit widget for downloading or recording audio. There is support for most audio formats.",
